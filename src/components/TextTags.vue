@@ -30,14 +30,19 @@ export default {
   methods: {
     onResize() {
       this.$nextTick(() => {
-        const textDataBottom =
-          this.$refs.tagsData.getBoundingClientRect().bottom;
+        const { bottom: globalBottom, y: globalY } =
+          this.$refs.tagsData.getBoundingClientRect();
+        const globalOffset = globalBottom + globalY + 10;
 
         this.myTags.forEach((tag, index) => {
-          const tagItemBottom =
-            this.$refs.tagItem[index].getBoundingClientRect().bottom;
+          const { bottom, y, width } =
+            this.$refs.tagItem[index].getBoundingClientRect();
+          const tagOffset = bottom + y;
 
-          tag.visible = tagItemBottom + 2 < textDataBottom;
+          tag.visible = tagOffset < globalOffset;
+          if (!tag.width) {
+            tag.width = width + 12;
+          }
         });
       });
     },
@@ -56,19 +61,20 @@ export default {
       }"
     >
       <template v-for="(tag, index) in myTags">
-        <span
+        <div
           class="textTags__item"
           ref="tagItem"
           :class="{
             textTags__item_invisible: !tag.visible,
           }"
+          :style="{ width: tag.width + 'px' }"
         >
           <v-icon>{{ tag.icon }}</v-icon>
           {{ tag.text }}
           <v-icon v-if="myTags[index].visible && myTags[index + 1]?.visible">
             mdi-circle-small
           </v-icon>
-        </span>
+        </div>
       </template>
     </div>
   </div>
@@ -86,11 +92,12 @@ export default {
 }
 .textTags__data {
   margin: 3rem;
-  height: 4rem;
+  height: 3rem;
   overflow: hidden;
 }
 .textTags__item {
-  text-align: justify;
+  display: inline-block;
+  text-align: left;
 }
 .textTags__item_invisible {
   opacity: 0;
