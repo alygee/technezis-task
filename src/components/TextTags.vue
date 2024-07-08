@@ -32,17 +32,13 @@ export default {
       this.$nextTick(() => {
         const { bottom: globalBottom, y: globalY } =
           this.$refs.tagsData.getBoundingClientRect();
-        const globalOffset = globalBottom + globalY + 10;
+        const globalOffset = globalBottom + globalY;
 
         this.myTags.forEach((tag, index) => {
-          const { bottom, y, width } =
+          const { bottom, y } =
             this.$refs.tagItem[index].getBoundingClientRect();
           const tagOffset = bottom + y;
-
-          tag.visible = tagOffset < globalOffset;
-          if (!tag.width) {
-            tag.width = width + 12;
-          }
+          tag.visible = tagOffset < globalOffset + 10;
         });
       });
     },
@@ -67,14 +63,13 @@ export default {
           :class="{
             textTags__item_invisible: !tag.visible,
           }"
-          :style="{ width: tag.width + 'px' }"
         >
           <v-icon>{{ tag.icon }}</v-icon>
           {{ tag.text }}
-          <v-icon v-if="myTags[index].visible && myTags[index + 1]?.visible">
-            mdi-circle-small
-          </v-icon>
         </div>
+        <v-icon v-if="myTags[index].visible && myTags[index + 1]?.visible">
+          mdi-circle-small
+        </v-icon>
       </template>
     </div>
   </div>
@@ -87,17 +82,15 @@ export default {
   color: rgba(0, 0, 0, 0.86);
   font-size: 16px;
   height: 8rem;
-  margin: 2.5rem 0;
   width: 100%;
 }
 .textTags__data {
   margin: 3rem;
-  height: 3rem;
+  height: 2rem;
   overflow: hidden;
 }
 .textTags__item {
   display: inline-block;
-  text-align: left;
 }
 .textTags__item_invisible {
   opacity: 0;
@@ -107,6 +100,8 @@ export default {
   text-align: left;
 }
 .textTags__data_alignJustify {
-  text-align: justify;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

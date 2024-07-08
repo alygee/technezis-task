@@ -12,37 +12,10 @@ export default {
         { id: 4, text: "Тобольские ворота" },
         { id: 5, text: "2.3 км от вас" },
         { id: 6, text: "4.3", icon: "mdi-star-outline" },
-        { id: 7, text: "Тарские ворота" },
-        { id: 8, text: "3.4 км от вас" },
-        { id: 9, text: "6.5", icon: "mdi-star-outline" },
-        { id: 10, text: "Омские ворота" },
-        { id: 11, text: "4.5 км от вас" },
-        { id: 12, text: "7.6", icon: "mdi-star-outline" },
-        { id: 13, text: "Триумфальная арка" },
-        { id: 14, text: "4500 км от вас" },
-        { id: 15, text: "8.7", icon: "mdi-star-outline" },
-        { id: 16, text: "Ворота Сен-Дени" },
-        { id: 17, text: "3250 км от вас" },
-        { id: 18, text: "4.3", icon: "mdi-star-outline" },
-        { id: 19, text: "Фридландские ворота" },
-        { id: 20, text: "1.2 км от вас" },
-        { id: 21, text: "5.4", icon: "mdi-star-outline" },
-        { id: 22, text: "Тобольские ворота" },
-        { id: 23, text: "2.3 км от вас" },
-        { id: 24, text: "4.3", icon: "mdi-star-outline" },
-        { id: 25, text: "Тарские ворота" },
-        { id: 26, text: "3.4 км от вас" },
-        { id: 27, text: "6.5", icon: "mdi-star-outline" },
-        { id: 28, text: "Омские ворота" },
-        { id: 29, text: "4.5 км от вас" },
-        { id: 30, text: "7.6", icon: "mdi-star-outline" },
-        { id: 31, text: "Триумфальная арка" },
-        { id: 32, text: "4500 км от вас" },
-        { id: 33, text: "8.7", icon: "mdi-star-outline" },
-        { id: 34, text: "Ворота Сен-Дени" },
-        { id: 35, text: "3250 км от вас" },
       ],
-      count: 0,
+      leftAlignment: "left",
+      rightAlignment: "justify",
+      wideAlignment: "left",
       jsonError: "",
     };
   },
@@ -68,6 +41,7 @@ export default {
   <v-app class="technezisTagsApp">
     <v-main>
       <v-container>
+        <div class="text-h5 ma-3">Входные параметры-теги</div>
         <v-textarea
           outlined
           label="Input JSON tags"
@@ -75,10 +49,50 @@ export default {
           @input="updateTextTags"
           :error-messages="jsonError"
         ></v-textarea>
+
         <hr class="technezisTagsApp__divider" />
 
         <v-row>
-          <TextTags :tags="tags"></TextTags>
+          <v-col>
+            <div class="text-h5 ma-3">
+              Простой кейс, когда мало тегов и мало пространства для компонента
+            </div>
+            <v-select
+              :items="['left', 'justify']"
+              outlined
+              v-model="wideAlignment"
+            ></v-select>
+            <TextTags :tags="tags" :align="wideAlignment"></TextTags>
+          </v-col>
+        </v-row>
+
+        <hr class="technezisTagsApp__divider" />
+
+        <v-row>
+          <v-col>
+            <div class="text-h5 ma-3">Пример с выравниванием</div>
+            <v-select
+              :items="['left', 'justify']"
+              outlined
+              v-model="leftAlignment"
+            ></v-select>
+            <TextTags
+              :tags="tags.slice(0, 3)"
+              :align="leftAlignment"
+            ></TextTags>
+          </v-col>
+          <v-col>
+            <div class="text-h5 ma-3">Пример с выравниванием</div>
+            <v-select
+              :items="['left', 'justify']"
+              outlined
+              v-model="rightAlignment"
+            ></v-select>
+            <TextTags
+              :tags="tags.slice(0, 3)"
+              :align="rightAlignment"
+            ></TextTags>
+          </v-col>
         </v-row>
       </v-container>
     </v-main>
