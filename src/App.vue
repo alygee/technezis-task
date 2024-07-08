@@ -67,16 +67,20 @@ export default {
 <template>
   <v-app class="technezisTagsApp">
     <v-main>
-      <v-textarea
-        outlined
-        label="Input JSON tags"
-        :value="textTags"
-        @input="updateTextTags"
-        :error-messages="jsonError"
-      ></v-textarea>
-      <hr class="technezisTagsApp__divider" />
+      <v-container>
+        <v-textarea
+          outlined
+          label="Input JSON tags"
+          :value="textTags"
+          @input="updateTextTags"
+          :error-messages="jsonError"
+        ></v-textarea>
+        <hr class="technezisTagsApp__divider" />
 
-      <TextTags :tags="tags"></TextTags>
+        <v-row>
+          <TextTags :tags="tags"></TextTags>
+        </v-row>
+      </v-container>
     </v-main>
   </v-app>
 </template>

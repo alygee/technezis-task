@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuetify from "vuetify/lib";
 import App from "./App.vue";
 
-import "./assets/main.css";
+import "@mdi/font/css/materialdesignicons.css";
 
 Vue.use(Vuetify);
 
